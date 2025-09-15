@@ -1,0 +1,8 @@
+certifi==2025.8.3
+charset-normalizer==3.4.3
+idna==3.10
+# Editable install with no version control (lazyT==0.1)
+-e c:\users\jace\python\tutorial\cli_app_practice\todolist\lazy-folder
+requests==2.32.5
+setuptools==80.9.0
+urllib3==2.5.0
