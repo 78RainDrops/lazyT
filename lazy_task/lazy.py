@@ -29,6 +29,7 @@ def edit_task(task_id, new_task, task_list):
     for tsk in task_list:
         if tsk['id'] == str(task_id):
             tsk['description'] = new_task
+            tsk['updateAt'] = get_time()
             save_task.save(task_list)
             print("Task edited successfully")
 
@@ -36,17 +37,18 @@ def done_task(task_id,status,task_list):
     for tsk in task_list:
         if tsk['id'] == str(task_id):
             tsk['status'] = status
+            tsk['updateAt'] = get_time()
             save_task.save(task_list)
             print(f'Task updated to: {status}')
 
 def show_task(task_list, status=None):
     filtered = [tsk for tsk in task_list if(status is None or tsk['status'] == status)]
 
-    print(f"{'ID':<5} {'TASK':<20} {'STATUS':<8} {'CREATED':<20} {'UPDATED':<20}")
-    print("-"*69)
+    print(f"{'ID':<5} {'TASK':<20} {'STATUS':<12} {'CREATED':<20} {'UPDATED':<20}")
+    print("-"*82)
 
     for tsk in filtered:
-        print(f"{tsk['id']:<5} {tsk['description']:<20} {tsk['status']:<8} {tsk['createdAt']:<20} {tsk['updateAt']:<20}")
+        print(f"{tsk['id']:<5} {tsk['description']:<20} {tsk['status']:<15} {tsk['createdAt']:<20} {tsk['updateAt']:<20}")
     
     if not filtered:
         print("No Task found")
@@ -54,6 +56,7 @@ def show_task(task_list, status=None):
 def delete_task(task_id,task_list):
     print(f"Deleting task id {task_id}")
     task_list = list(filter(lambda t: t['id'] != str(task_id), task_list))
+    print(f"Task {task_id} deleted successfully")
     save_task.save(task_list)
     return task_list
 
@@ -105,3 +108,6 @@ def main():
         delete_task(args.id, task_list)
     else:
         parser.print_help()
+
+if __name__ == "__main__":
+    main()
